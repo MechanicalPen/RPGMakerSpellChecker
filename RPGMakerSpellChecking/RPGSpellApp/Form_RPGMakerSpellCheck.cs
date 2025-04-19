@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TestingApplication
+namespace RPGMakerSpellChecker
 {
     public partial class Form_RPGMakerSpellCheck : Form
     {

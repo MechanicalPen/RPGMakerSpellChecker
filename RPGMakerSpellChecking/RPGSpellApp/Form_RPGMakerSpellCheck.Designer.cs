@@ -1,5 +1,5 @@
 ﻿
-namespace TestingApplication
+namespace RPGMakerSpellChecker
 {
     partial class Form_RPGMakerSpellCheck
     {
@@ -45,7 +45,7 @@ namespace TestingApplication
             this.Timer_CheckSpelling = new System.Windows.Forms.Timer(this.components);
             this.Button_Save = new System.Windows.Forms.Button();
             this.timer_ShowSavedtext = new System.Windows.Forms.Timer(this.components);
-            this.RTB_EventText = new TestingApplication.CustomPaintRichText();
+            this.RTB_EventText = new RPGMakerSpellChecker.CustomPaintRichText();
             this.spellingWorker1 = new NHunspellComponent.Spelling.SpellingWorker();
             this.SuspendLayout();
             // 

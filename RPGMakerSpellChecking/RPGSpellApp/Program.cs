@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace TestingApplication
+namespace RPGMakerSpellChecker
 {
    internal static class Program
    {

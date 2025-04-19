@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using NHunspellComponent.Spelling;
 
-namespace TestingApplication
+namespace RPGMakerSpellChecker
 {
    public partial class TestForm : Form
    {

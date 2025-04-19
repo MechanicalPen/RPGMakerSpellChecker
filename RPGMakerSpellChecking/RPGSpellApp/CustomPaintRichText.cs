@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using NHunspellComponent.Spelling.Interfaces;
 using NHunspellComponent.SupportClasses;
 
-namespace TestingApplication
+namespace RPGMakerSpellChecker
 {
    public class CustomPaintRichText : RichTextBox, IUnderlineableSpellingControl
    {

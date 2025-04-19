@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using NHunspellComponent.Spelling.Interfaces;
 
-namespace TestingApplication
+namespace RPGMakerSpellChecker
 {
    internal class CustomMaskedTextBox : MaskedTextBox, ISpellingControl
    {

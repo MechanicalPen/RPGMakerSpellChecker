@@ -1,4 +1,4 @@
-namespace TestingApplication
+namespace RPGMakerSpellChecker
 {
    partial class TestForm
    {
@@ -31,8 +31,8 @@ namespace TestingApplication
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestForm));
             this.bCkeckAll = new System.Windows.Forms.Button();
             this.chAutoSpelling = new System.Windows.Forms.CheckBox();
-            this.customPaintRichText21 = new TestingApplication.CustomPaintRichText();
-            this.customMaskedTextBox1 = new TestingApplication.CustomMaskedTextBox();
+            this.customPaintRichText21 = new RPGMakerSpellChecker.CustomPaintRichText();
+            this.customMaskedTextBox1 = new RPGMakerSpellChecker.CustomMaskedTextBox();
             this.spellingWorker1 = new NHunspellComponent.Spelling.SpellingWorker();
             this.spellingWorker2 = new NHunspellComponent.Spelling.SpellingWorker();
             this.SuspendLayout();

@@ -8,8 +8,8 @@
     <ProjectGuid>{B773AD17-FFAB-453C-8913-9419AC732027}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestingApplication</RootNamespace>
-    <AssemblyName>TestingApplication</AssemblyName>
+    <RootNamespace>RPGMakerSpellChecker</RootNamespace>
+    <AssemblyName>RPGSpellChecker</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
