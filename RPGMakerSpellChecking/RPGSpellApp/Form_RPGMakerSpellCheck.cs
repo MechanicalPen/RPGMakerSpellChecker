@@ -132,9 +132,9 @@ namespace RPGMakerSpellChecker
             int oldListIndex = listIndex;
 
             bool weFoundOne = false;
+            skipToEndOfCodeSequence();
             do
             {
-                skipToEndOfCodeSequence();
                 listIndex++;
                 if (listIndex >= theList.Count)
                 {
@@ -151,6 +151,7 @@ namespace RPGMakerSpellChecker
                     eventIndex = oldEventIndex;
                     pageIndex = oldPageIndex;
                     listIndex = oldListIndex;
+                    reloadEventsUpToList();
                     return false; //we're done.
                 }
                 reloadEventsUpToList();
@@ -176,9 +177,9 @@ namespace RPGMakerSpellChecker
             int oldListIndex = listIndex;
 
             bool weFoundOne = false;
+            skipToStartOfCodeSequence();
             do
             {
-                skipToStartOfCodeSequence();
                 listIndex--;
                 if (listIndex < 0)
                 {
@@ -190,11 +191,12 @@ namespace RPGMakerSpellChecker
                     pageIndex = int.MaxValue;
                     eventIndex--;
                 }
-                if (eventIndex < 0)
+                if (eventIndex < 1)
                 {
                     eventIndex = oldEventIndex;
                     pageIndex = oldPageIndex;
                     listIndex = oldListIndex;
+                    reloadEventsUpToList();
                     return false; //we're done.
                 }
                 reloadEventsUpToList();
