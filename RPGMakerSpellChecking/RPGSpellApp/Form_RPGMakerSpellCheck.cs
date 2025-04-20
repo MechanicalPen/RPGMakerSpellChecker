@@ -156,6 +156,15 @@ namespace RPGMakerSpellChecker
                 {
                     pageIndex = 0;
                     eventIndex++;
+                    if (!(eventIndex >= mapEvents.Count))
+                    {
+                        JToken tempEvent = mapEvents[eventIndex];
+                        while (tempEvent.Type == JTokenType.Null && !(eventIndex >= mapEvents.Count))
+                        {
+                            eventIndex++;
+                            tempEvent = mapEvents[eventIndex];
+                        }
+                    }
                 }
                 if (eventIndex >= mapEvents.Count)
                 {
@@ -201,6 +210,15 @@ namespace RPGMakerSpellChecker
                 {
                     pageIndex = int.MaxValue;
                     eventIndex--;
+                    if (!(eventIndex >= mapEvents.Count))
+                    {
+                        JToken tempEvent = mapEvents[eventIndex];
+                        while (tempEvent.Type == JTokenType.Null && !(eventIndex < 1))
+                        {
+                            eventIndex--;
+                            tempEvent = mapEvents[eventIndex];
+                        }
+                    }
                 }
                 if (eventIndex < 1)
                 {
@@ -303,6 +321,22 @@ namespace RPGMakerSpellChecker
 
         // ui stuff
 
+        protected override bool ProcessCmdKey(ref Message message, Keys keys)
+        {
+            switch (keys)
+            {
+                case Keys.Oemcomma | Keys.Control:
+                    Button_Previous_Click(Button_Next, new EventArgs());
+                    return true; 
+                case Keys.OemPeriod | Keys.Control:
+                    Button_Next_Click(Button_Next, new EventArgs());
+                    return true;
+            }
+
+            // run base implementation
+            return base.ProcessCmdKey(ref message, keys);
+        }
+
         private void Button_LoadMapFile_Click(object sender, EventArgs e)
         {
             if (OFD_MapJson.ShowDialog() == DialogResult.OK)
@@ -365,6 +399,7 @@ namespace RPGMakerSpellChecker
 
         private void Button_Next_Click(object sender, EventArgs e)
         {
+            if (mapObject == null) { return; }
             SaveTextDataToEvent(RTB_EventText.Text);
             bool didFindText = searchDownForEventText();
             if (didFindText)
@@ -379,6 +414,7 @@ namespace RPGMakerSpellChecker
 
         private void Button_Previous_Click(object sender, EventArgs e)
         {
+            if (mapObject == null) { return; }
             SaveTextDataToEvent(RTB_EventText.Text);
             bool didFindText = searchUpForEventText();
             if (didFindText)
