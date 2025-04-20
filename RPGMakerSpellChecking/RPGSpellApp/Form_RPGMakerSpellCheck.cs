@@ -31,13 +31,12 @@ namespace RPGMakerSpellChecker
         string mode = "none"; // todo eventually we'll support choices.
 
         string loadedFileName = "";
+        bool alreadyWarnedAboutMV = false;
 
         public Form_RPGMakerSpellCheck()
         {
             InitializeComponent();
             this.Icon = Properties.Resources.spellcheckericon;
-            RTB_EventText.IsSpellingEnabled = true;
-            RTB_EventText.IsSpellingAutoEnabled = true;
         }
 
         // ui stuff
@@ -46,7 +45,12 @@ namespace RPGMakerSpellChecker
         {
             RTB_EventText.Clear();
             RTB_EventText.Text = currentEventText;
+            RTB_EventText.ClearUndo();
             RTB_EventText.Update();
+
+            Label_Event.Text = "EV" + eventIndex.ToString("D3");
+            Label_Page.Text = (pageIndex + 1).ToString();
+            Label_EventName.Text = getCurrentEventName();
         }
 
         private void CheckSpelling()
@@ -58,6 +62,13 @@ namespace RPGMakerSpellChecker
 
 
         // loady stuf
+
+        private string getCurrentEventName()
+        {
+            if (theEvent == null) { return ""; }
+            JValue name = (JValue)theEvent["name"];
+            return name.ToObject<string>();
+        }
 
         private void slurpDataFromMap()
         {
@@ -301,6 +312,7 @@ namespace RPGMakerSpellChecker
                 try
                 {
                     TextBox_FileName.Text = fileName;
+                    WarnAboutFileIfMV();
                     using (StreamReader file = File.OpenText(fileName))
                     using (JsonTextReader reader = new JsonTextReader(file))
                     {
@@ -325,6 +337,28 @@ namespace RPGMakerSpellChecker
             if (CheckBox_AutoCheckSpelling.Checked)
             {
                 CheckSpelling();
+            }
+        }
+
+        private void WarnAboutFileIfMV()
+        {
+            //try to find Game.rpgproject. if it exists we want to warn the user about leaving Maker MV open.
+            string fileName = TextBox_FileName.Text;
+
+            try
+            {
+                string path = Path.GetDirectoryName(fileName);
+                DirectoryInfo parentDir = Directory.GetParent(path);
+                if (!alreadyWarnedAboutMV && File.Exists(parentDir.FullName + Path.DirectorySeparatorChar + "Game.rpgproject"))
+                {
+                    string programName = this.Text;
+                    MessageBox.Show("Remember! You must close RPG Maker MV while spell checking to avoid data loss. Make sure the RPG Maker MV program is closed.\n\nYou won't be warned again until you restart " + programName, "MV Data Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    alreadyWarnedAboutMV = true;
+                }
+            }
+            catch
+            {
+                //if we couldn't find the Game.rpgproject then we probably don't need to warn them.
             }
         }
 
@@ -434,6 +468,73 @@ namespace RPGMakerSpellChecker
         {
             timer_ShowSavedtext.Stop();
             Button_Save.Text = "Save " + loadedFileName;
+        }
+
+        private void RTB_EventText_Enter(object sender, EventArgs e)
+        {
+            RTB_EventText.IsSpellingEnabled = true;
+            RTB_EventText.IsSpellingAutoEnabled = true;
+        }
+
+        private void RTB_EventText_Leave(object sender, EventArgs e)
+        {
+            RTB_EventText.IsSpellingEnabled = true;
+            RTB_EventText.IsSpellingAutoEnabled = false;
+        }
+
+        private void RTB_EventText_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateRTBFeatureButtons();
+        }
+
+        private void RTB_EventText_TextChanged(object sender, EventArgs e)
+        {
+            UpdateRTBFeatureButtons();
+        }
+
+        private void UpdateRTBFeatureButtons()
+        {
+            Button_Undo.Enabled = !RTB_EventText.ReadOnly && RTB_EventText.CanUndo;
+            Button_Redo.Enabled = !RTB_EventText.ReadOnly && RTB_EventText.CanRedo;
+            Button_Cut.Enabled = !RTB_EventText.ReadOnly && RTB_EventText.SelectionLength > 0;
+            Button_Copy.Enabled = RTB_EventText.SelectionLength > 0;
+            Button_Paste.Enabled = !RTB_EventText.ReadOnly && Clipboard.ContainsText();
+            Button_SelectAll.Enabled = RTB_EventText.TextLength > 0 && RTB_EventText.SelectionLength < RTB_EventText.TextLength;
+        }
+
+        private void Button_Copy_Click(object sender, EventArgs e)
+        {
+            RTB_EventText.Focus();
+            RTB_EventText.Copy();
+            UpdateRTBFeatureButtons();
+        }
+
+        private void Button_Paste_Click(object sender, EventArgs e)
+        {
+            RTB_EventText.Focus();
+            RTB_EventText.Paste();
+            UpdateRTBFeatureButtons();
+        }
+
+        private void Button_SelectAll_Click(object sender, EventArgs e)
+        {
+            RTB_EventText.Focus();
+             RTB_EventText.SelectAll();
+            UpdateRTBFeatureButtons();
+        }
+
+        private void Button_Undo_Click(object sender, EventArgs e)
+        {
+            RTB_EventText.Focus();
+            RTB_EventText.Undo();
+            UpdateRTBFeatureButtons();
+        }
+
+        private void Button_Redo_Click(object sender, EventArgs e)
+        {
+            RTB_EventText.Focus();
+            RTB_EventText.Redo();
+            UpdateRTBFeatureButtons();
         }
     }
 }

@@ -322,10 +322,16 @@ namespace NHunspellComponent.Spelling
                   item.Text = Constants.NoSuggestions;
                   item.Enabled = false;
                   tsList.Add(item);
+
+                   tsList.Add(new ToolStripSeparator());
+                   ToolStripItem item2 = new ToolStripMenuItem("Open Dictionary", null,
+                                                              new EventHandler(CallShowCurrentWordWindow));
+                   tsList.Add(item2);
                }
                else
                {
-                  ToolStripItem item = new ToolStripMenuItem("All suggestions", null,
+                  tsList.Add(new ToolStripSeparator());
+                  ToolStripItem item = new ToolStripMenuItem("All Suggestions", null,
                                                              new EventHandler(CallShowCurrentWordWindow));
                   tsList.Add(item);
                }
@@ -449,6 +455,11 @@ namespace NHunspellComponent.Spelling
          //spelling.Text = editor.Text;
          //usefull when we should check only one word at cursor position.
          int wordIndex = GetWordIndex(editor.Text, editor.SelectionStart);
+            ShowCheckAllWindow();
+            if (spellingForm.Visible)
+            {
+                SpellingFormHighlight(wordIndex);
+            }
          //spelling.SpellCheck(wordIndex);
       }
 
