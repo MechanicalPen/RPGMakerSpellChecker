@@ -440,6 +440,11 @@ namespace NHunspellComponent.Spelling
          editor.SelectionStart = word.Start + replacementWord.Length;
       }
 
+      public void CloseCheckAllWindow()
+        {
+            spellingForm.Visible = false;
+        }
+
       public void ShowCheckAllWindow()
       {
          RestoreMaxSuggestions();
@@ -514,6 +519,7 @@ namespace NHunspellComponent.Spelling
       public Dictionary<int, int> GetMisspelledWordsRanges(int startIndex)
       {
          Dictionary<int, int> result = new Dictionary<int, int>();
+            string temp = editor.Text;
          for (int i = startIndex; i < editor.Text.Length; i++)
          {
             Word word = Word.GetWordFromPosition(editor.Text, i);

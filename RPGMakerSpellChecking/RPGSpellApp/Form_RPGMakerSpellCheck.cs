@@ -8,12 +8,13 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
 namespace RPGMakerSpellChecker
 {
-    public partial class Form_RPGMakerSpellCheck : Form
+    public partial class Form_RPGMakerSpellCheck : Form, IMessageFilter
     {
         JObject mapObject;
         JArray mapEvents;
@@ -36,10 +37,36 @@ namespace RPGMakerSpellChecker
         public Form_RPGMakerSpellCheck()
         {
             InitializeComponent();
+            Application.AddMessageFilter(this);
+            VLabel_MouseScroll.MouseWheel += VLabel_MouseScroll_MouseWheel;
+            VLabel_MouseScroll2.MouseWheel += VLabel_MouseScroll_MouseWheel;
             RTB_EventText.IsSpellingEnabled = true;
             RTB_EventText.IsSpellingAutoEnabled = true;
             this.Icon = Properties.Resources.spellcheckericon;
         }
+
+        // message filter for scroll wheel. from https://stackoverflow.com/a/10006877
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg == 0x20a)
+            {
+                // WM_MOUSEWHEEL, find the control at screen position m.LParam
+                Point pos = new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16);
+                IntPtr hWnd = WindowFromPoint(pos);
+                if (hWnd != IntPtr.Zero && hWnd != m.HWnd && Control.FromHandle(hWnd) != null)
+                {
+                    SendMessage(hWnd, m.Msg, m.WParam, m.LParam);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // P/Invoke declarations
+        [DllImport("user32.dll")]
+        private static extern IntPtr WindowFromPoint(Point pt);
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 
         // ui stuff
 
@@ -58,6 +85,7 @@ namespace RPGMakerSpellChecker
 
         private void CheckSpelling()
         {
+            NHunspellWrapper.Instance.CloseCheckAllWindow();
             Timer_CheckSpelling.Start();
         }
 
@@ -328,11 +356,20 @@ namespace RPGMakerSpellChecker
         {
             switch (keys)
             {
-                case Keys.Oemcomma | Keys.Control:
+                case Keys.Up | Keys.Control:
                     Button_Previous_Click(Button_Next, new EventArgs());
                     return true; 
-                case Keys.OemPeriod | Keys.Control:
+                case Keys.Down | Keys.Control:
                     Button_Next_Click(Button_Next, new EventArgs());
+                    return true;
+                case Keys.S | Keys.Control:
+                    Button_Save_Click(Button_Save, new EventArgs());
+                    return true;
+                case Keys.O | Keys.Control:
+                    Button_LoadMapFile_Click(Button_LoadMapFile, new EventArgs());
+                    return true;
+                case Keys.D | Keys.Control:
+                    Button_CheckSpelling_Click(Button_CheckSpelling, new EventArgs());
                     return true;
             }
 
@@ -494,7 +531,15 @@ namespace RPGMakerSpellChecker
         private void Timer_CheckSpelling_Tick(object sender, EventArgs e)
         {
             Timer_CheckSpelling.Stop();
-            NHunspellWrapper.Instance.ShowCheckAllWindow();
+            if (!CheckBox_AutoCheckSpelling.Checked)
+            {
+                // if we're not auto-spelling then the user must have manually opened the window.
+                NHunspellWrapper.Instance.ShowCheckAllWindow();
+            }
+            else if (NHunspellWrapper.Instance.GetMisspelledWordsRanges().Count > 0)
+            {
+                NHunspellWrapper.Instance.ShowCheckAllWindow();
+            }
         }
 
         private void TextBox_FileName_TextChanged(object sender, EventArgs e)
@@ -562,6 +607,18 @@ namespace RPGMakerSpellChecker
             RTB_EventText.Focus();
             RTB_EventText.Redo();
             UpdateRTBFeatureButtons();
+        }
+
+        private void VLabel_MouseScroll_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                Button_Next_Click(Button_Next, new EventArgs());
+            }
+            else if (e.Delta > 0)
+            {
+                Button_Previous_Click(Button_Previous, new EventArgs());
+            }
         }
     }
 }

@@ -49,8 +49,6 @@ namespace RPGMakerSpellChecker
             this.Label_Event = new System.Windows.Forms.Label();
             this.Label_PageLabel = new System.Windows.Forms.Label();
             this.Label_Page = new System.Windows.Forms.Label();
-            this.RTB_EventText = new RPGMakerSpellChecker.CustomPaintRichText();
-            this.spellingWorker1 = new NHunspellComponent.Spelling.SpellingWorker();
             this.Label_EventNameLabel = new System.Windows.Forms.Label();
             this.Label_EventName = new System.Windows.Forms.Label();
             this.Button_Copy = new System.Windows.Forms.Button();
@@ -59,6 +57,11 @@ namespace RPGMakerSpellChecker
             this.Button_Undo = new System.Windows.Forms.Button();
             this.Button_Redo = new System.Windows.Forms.Button();
             this.Button_Cut = new System.Windows.Forms.Button();
+            this.VLabel_MouseScroll = new RPGMakerSpellChecker.CustomControls.VerticalLabel();
+            this.RTB_EventText = new RPGMakerSpellChecker.CustomPaintRichText();
+            this.spellingWorker1 = new NHunspellComponent.Spelling.SpellingWorker();
+            this.VLabel_MouseScroll2 = new RPGMakerSpellChecker.CustomControls.VerticalLabel();
+            this.ToolTip_HotKeys = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // OFD_MapJson
@@ -74,6 +77,7 @@ namespace RPGMakerSpellChecker
             this.Button_LoadMapFile.Size = new System.Drawing.Size(119, 23);
             this.Button_LoadMapFile.TabIndex = 0;
             this.Button_LoadMapFile.Text = "Open MapXXX.json";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_LoadMapFile, "Ctrl + O");
             this.Button_LoadMapFile.UseVisualStyleBackColor = true;
             this.Button_LoadMapFile.Click += new System.EventHandler(this.Button_LoadMapFile_Click);
             // 
@@ -84,7 +88,7 @@ namespace RPGMakerSpellChecker
             this.TextBox_FileName.Location = new System.Drawing.Point(228, 12);
             this.TextBox_FileName.Name = "TextBox_FileName";
             this.TextBox_FileName.ReadOnly = true;
-            this.TextBox_FileName.Size = new System.Drawing.Size(544, 20);
+            this.TextBox_FileName.Size = new System.Drawing.Size(524, 20);
             this.TextBox_FileName.TabIndex = 2;
             this.TextBox_FileName.TextChanged += new System.EventHandler(this.TextBox_FileName_TextChanged);
             // 
@@ -102,42 +106,43 @@ namespace RPGMakerSpellChecker
             this.Label_Backup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Label_Backup.AutoSize = true;
             this.Label_Backup.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Backup.Location = new System.Drawing.Point(617, 268);
+            this.Label_Backup.Location = new System.Drawing.Point(597, 268);
             this.Label_Backup.Name = "Label_Backup";
             this.Label_Backup.Size = new System.Drawing.Size(155, 13);
-            this.Label_Backup.TabIndex = 12;
+            this.Label_Backup.TabIndex = 23;
             this.Label_Backup.Text = "(Did you back up your project?)";
             // 
             // Button_SaveAs
             // 
             this.Button_SaveAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_SaveAs.Location = new System.Drawing.Point(691, 284);
+            this.Button_SaveAs.Location = new System.Drawing.Point(671, 284);
             this.Button_SaveAs.Name = "Button_SaveAs";
             this.Button_SaveAs.Size = new System.Drawing.Size(81, 23);
-            this.Button_SaveAs.TabIndex = 14;
+            this.Button_SaveAs.TabIndex = 22;
             this.Button_SaveAs.Text = "Save As...";
             this.Button_SaveAs.UseVisualStyleBackColor = true;
             this.Button_SaveAs.Click += new System.EventHandler(this.Button_SaveAs_Click);
             // 
             // Button_Previous
             // 
-            this.Button_Previous.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_Previous.Location = new System.Drawing.Point(673, 56);
+            this.Button_Previous.Location = new System.Drawing.Point(12, 56);
             this.Button_Previous.Name = "Button_Previous";
             this.Button_Previous.Size = new System.Drawing.Size(99, 23);
-            this.Button_Previous.TabIndex = 3;
+            this.Button_Previous.TabIndex = 11;
             this.Button_Previous.Text = "Previous Text";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Previous, "Ctrl + Up Arrow");
             this.Button_Previous.UseVisualStyleBackColor = true;
             this.Button_Previous.Click += new System.EventHandler(this.Button_Previous_Click);
             // 
             // Button_Next
             // 
-            this.Button_Next.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_Next.Location = new System.Drawing.Point(673, 187);
+            this.Button_Next.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_Next.Location = new System.Drawing.Point(12, 187);
             this.Button_Next.Name = "Button_Next";
             this.Button_Next.Size = new System.Drawing.Size(99, 23);
-            this.Button_Next.TabIndex = 11;
+            this.Button_Next.TabIndex = 14;
             this.Button_Next.Text = "Next Text";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Next, "Ctrl + Down Arrow");
             this.Button_Next.UseVisualStyleBackColor = true;
             this.Button_Next.Click += new System.EventHandler(this.Button_Next_Click);
             // 
@@ -148,21 +153,24 @@ namespace RPGMakerSpellChecker
             // 
             // Button_CheckSpelling
             // 
-            this.Button_CheckSpelling.Location = new System.Drawing.Point(12, 56);
+            this.Button_CheckSpelling.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_CheckSpelling.Location = new System.Drawing.Point(166, 187);
             this.Button_CheckSpelling.Name = "Button_CheckSpelling";
             this.Button_CheckSpelling.Size = new System.Drawing.Size(99, 23);
-            this.Button_CheckSpelling.TabIndex = 8;
+            this.Button_CheckSpelling.TabIndex = 3;
             this.Button_CheckSpelling.Text = "Check Spelling";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_CheckSpelling, "Ctrl + D");
             this.Button_CheckSpelling.UseVisualStyleBackColor = true;
             this.Button_CheckSpelling.Click += new System.EventHandler(this.Button_CheckSpelling_Click);
             // 
             // CheckBox_AutoCheckSpelling
             // 
+            this.CheckBox_AutoCheckSpelling.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBox_AutoCheckSpelling.AutoSize = true;
-            this.CheckBox_AutoCheckSpelling.Location = new System.Drawing.Point(120, 60);
+            this.CheckBox_AutoCheckSpelling.Location = new System.Drawing.Point(271, 191);
             this.CheckBox_AutoCheckSpelling.Name = "CheckBox_AutoCheckSpelling";
             this.CheckBox_AutoCheckSpelling.Size = new System.Drawing.Size(81, 17);
-            this.CheckBox_AutoCheckSpelling.TabIndex = 9;
+            this.CheckBox_AutoCheckSpelling.TabIndex = 4;
             this.CheckBox_AutoCheckSpelling.Text = "Auto-check";
             this.CheckBox_AutoCheckSpelling.UseVisualStyleBackColor = true;
             this.CheckBox_AutoCheckSpelling.CheckedChanged += new System.EventHandler(this.CheckBox_AutoCheckSpelling_CheckedChanged);
@@ -175,11 +183,12 @@ namespace RPGMakerSpellChecker
             // Button_Save
             // 
             this.Button_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_Save.Location = new System.Drawing.Point(563, 284);
+            this.Button_Save.Location = new System.Drawing.Point(543, 284);
             this.Button_Save.Name = "Button_Save";
             this.Button_Save.Size = new System.Drawing.Size(119, 23);
-            this.Button_Save.TabIndex = 13;
+            this.Button_Save.TabIndex = 21;
             this.Button_Save.Text = "Save MapXXX.json";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Save, "Ctrl + S");
             this.Button_Save.UseVisualStyleBackColor = true;
             this.Button_Save.Click += new System.EventHandler(this.Button_Save_Click);
             // 
@@ -190,43 +199,138 @@ namespace RPGMakerSpellChecker
             // 
             // Label_EventLabel
             // 
-            this.Label_EventLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label_EventLabel.AutoSize = true;
-            this.Label_EventLabel.Location = new System.Drawing.Point(298, 61);
+            this.Label_EventLabel.Location = new System.Drawing.Point(171, 66);
             this.Label_EventLabel.Name = "Label_EventLabel";
             this.Label_EventLabel.Size = new System.Drawing.Size(52, 13);
-            this.Label_EventLabel.TabIndex = 4;
+            this.Label_EventLabel.TabIndex = 5;
             this.Label_EventLabel.Text = "Event ID:";
             // 
             // Label_Event
             // 
-            this.Label_Event.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label_Event.AutoSize = true;
-            this.Label_Event.Location = new System.Drawing.Point(351, 61);
+            this.Label_Event.Location = new System.Drawing.Point(224, 66);
             this.Label_Event.Name = "Label_Event";
             this.Label_Event.Size = new System.Drawing.Size(39, 13);
-            this.Label_Event.TabIndex = 5;
+            this.Label_Event.TabIndex = 6;
             this.Label_Event.Text = "EV000";
             // 
             // Label_PageLabel
             // 
-            this.Label_PageLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label_PageLabel.AutoSize = true;
-            this.Label_PageLabel.Location = new System.Drawing.Point(406, 61);
+            this.Label_PageLabel.Location = new System.Drawing.Point(279, 66);
             this.Label_PageLabel.Name = "Label_PageLabel";
             this.Label_PageLabel.Size = new System.Drawing.Size(35, 13);
-            this.Label_PageLabel.TabIndex = 6;
+            this.Label_PageLabel.TabIndex = 7;
             this.Label_PageLabel.Text = "Page:";
             // 
             // Label_Page
             // 
-            this.Label_Page.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label_Page.AutoSize = true;
-            this.Label_Page.Location = new System.Drawing.Point(442, 61);
+            this.Label_Page.Location = new System.Drawing.Point(315, 66);
             this.Label_Page.Name = "Label_Page";
             this.Label_Page.Size = new System.Drawing.Size(13, 13);
-            this.Label_Page.TabIndex = 7;
+            this.Label_Page.TabIndex = 8;
             this.Label_Page.Text = "0";
+            // 
+            // Label_EventNameLabel
+            // 
+            this.Label_EventNameLabel.AutoSize = true;
+            this.Label_EventNameLabel.Location = new System.Drawing.Point(346, 66);
+            this.Label_EventNameLabel.Name = "Label_EventNameLabel";
+            this.Label_EventNameLabel.Size = new System.Drawing.Size(38, 13);
+            this.Label_EventNameLabel.TabIndex = 9;
+            this.Label_EventNameLabel.Text = "Name:";
+            // 
+            // Label_EventName
+            // 
+            this.Label_EventName.AutoSize = true;
+            this.Label_EventName.Location = new System.Drawing.Point(385, 66);
+            this.Label_EventName.Name = "Label_EventName";
+            this.Label_EventName.Size = new System.Drawing.Size(39, 13);
+            this.Label_EventName.TabIndex = 10;
+            this.Label_EventName.Text = "EV000";
+            // 
+            // Button_Copy
+            // 
+            this.Button_Copy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_Copy.Location = new System.Drawing.Point(93, 257);
+            this.Button_Copy.Name = "Button_Copy";
+            this.Button_Copy.Size = new System.Drawing.Size(75, 23);
+            this.Button_Copy.TabIndex = 16;
+            this.Button_Copy.Text = "Copy";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Copy, "Ctrl + C");
+            this.Button_Copy.UseVisualStyleBackColor = true;
+            this.Button_Copy.Click += new System.EventHandler(this.Button_Copy_Click);
+            // 
+            // Button_Paste
+            // 
+            this.Button_Paste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_Paste.Location = new System.Drawing.Point(93, 286);
+            this.Button_Paste.Name = "Button_Paste";
+            this.Button_Paste.Size = new System.Drawing.Size(75, 23);
+            this.Button_Paste.TabIndex = 17;
+            this.Button_Paste.Text = "Paste";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Paste, "Ctrl + V");
+            this.Button_Paste.UseVisualStyleBackColor = true;
+            this.Button_Paste.Click += new System.EventHandler(this.Button_Paste_Click);
+            // 
+            // Button_SelectAll
+            // 
+            this.Button_SelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_SelectAll.Location = new System.Drawing.Point(12, 257);
+            this.Button_SelectAll.Name = "Button_SelectAll";
+            this.Button_SelectAll.Size = new System.Drawing.Size(75, 23);
+            this.Button_SelectAll.TabIndex = 18;
+            this.Button_SelectAll.Text = "Select All";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_SelectAll, "Ctrl + A");
+            this.Button_SelectAll.UseVisualStyleBackColor = true;
+            this.Button_SelectAll.Click += new System.EventHandler(this.Button_SelectAll_Click);
+            // 
+            // Button_Undo
+            // 
+            this.Button_Undo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_Undo.Location = new System.Drawing.Point(407, 187);
+            this.Button_Undo.Name = "Button_Undo";
+            this.Button_Undo.Size = new System.Drawing.Size(75, 23);
+            this.Button_Undo.TabIndex = 19;
+            this.Button_Undo.Text = "Undo";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Undo, "Crtl + Z");
+            this.Button_Undo.UseVisualStyleBackColor = true;
+            this.Button_Undo.Click += new System.EventHandler(this.Button_Undo_Click);
+            // 
+            // Button_Redo
+            // 
+            this.Button_Redo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_Redo.Location = new System.Drawing.Point(520, 187);
+            this.Button_Redo.Name = "Button_Redo";
+            this.Button_Redo.Size = new System.Drawing.Size(75, 23);
+            this.Button_Redo.TabIndex = 20;
+            this.Button_Redo.Text = "Redo";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Redo, "Ctrl + Y");
+            this.Button_Redo.UseVisualStyleBackColor = true;
+            this.Button_Redo.Click += new System.EventHandler(this.Button_Redo_Click);
+            // 
+            // Button_Cut
+            // 
+            this.Button_Cut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button_Cut.Location = new System.Drawing.Point(93, 228);
+            this.Button_Cut.Name = "Button_Cut";
+            this.Button_Cut.Size = new System.Drawing.Size(75, 23);
+            this.Button_Cut.TabIndex = 15;
+            this.Button_Cut.Text = "Cut";
+            this.ToolTip_HotKeys.SetToolTip(this.Button_Cut, "Ctrl + X");
+            this.Button_Cut.UseVisualStyleBackColor = true;
+            // 
+            // VLabel_MouseScroll
+            // 
+            this.VLabel_MouseScroll.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.VLabel_MouseScroll.Flip180 = true;
+            this.VLabel_MouseScroll.Location = new System.Drawing.Point(12, 85);
+            this.VLabel_MouseScroll.Name = "VLabel_MouseScroll";
+            this.VLabel_MouseScroll.Size = new System.Drawing.Size(37, 96);
+            this.VLabel_MouseScroll.TabIndex = 13;
+            this.VLabel_MouseScroll.Text = "< Scroll  Wheel >";
             // 
             // RTB_EventText
             // 
@@ -237,10 +341,10 @@ namespace RPGMakerSpellChecker
             this.RTB_EventText.IsPassWordProtected = false;
             this.RTB_EventText.IsSpellingAutoEnabled = false;
             this.RTB_EventText.IsSpellingEnabled = false;
-            this.RTB_EventText.Location = new System.Drawing.Point(12, 85);
+            this.RTB_EventText.Location = new System.Drawing.Point(55, 85);
             this.RTB_EventText.Name = "RTB_EventText";
-            this.RTB_EventText.Size = new System.Drawing.Size(760, 96);
-            this.RTB_EventText.TabIndex = 10;
+            this.RTB_EventText.Size = new System.Drawing.Size(659, 96);
+            this.RTB_EventText.TabIndex = 12;
             this.RTB_EventText.Text = "";
             this.RTB_EventText.UnderlinedSections = ((System.Collections.Generic.Dictionary<int, int>)(resources.GetObject("RTB_EventText.UnderlinedSections")));
             this.RTB_EventText.SelectionChanged += new System.EventHandler(this.RTB_EventText_SelectionChanged);
@@ -252,96 +356,24 @@ namespace RPGMakerSpellChecker
             this.spellingWorker1.IsEditorSpellingAutoEnabled = false;
             this.spellingWorker1.IsEditorSpellingEnabled = false;
             // 
-            // Label_EventNameLabel
+            // VLabel_MouseScroll2
             // 
-            this.Label_EventNameLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Label_EventNameLabel.AutoSize = true;
-            this.Label_EventNameLabel.Location = new System.Drawing.Point(473, 61);
-            this.Label_EventNameLabel.Name = "Label_EventNameLabel";
-            this.Label_EventNameLabel.Size = new System.Drawing.Size(38, 13);
-            this.Label_EventNameLabel.TabIndex = 15;
-            this.Label_EventNameLabel.Text = "Name:";
-            // 
-            // Label_EventName
-            // 
-            this.Label_EventName.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Label_EventName.AutoSize = true;
-            this.Label_EventName.Location = new System.Drawing.Point(512, 61);
-            this.Label_EventName.Name = "Label_EventName";
-            this.Label_EventName.Size = new System.Drawing.Size(39, 13);
-            this.Label_EventName.TabIndex = 16;
-            this.Label_EventName.Text = "EV000";
-            // 
-            // Button_Copy
-            // 
-            this.Button_Copy.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Button_Copy.Location = new System.Drawing.Point(355, 216);
-            this.Button_Copy.Name = "Button_Copy";
-            this.Button_Copy.Size = new System.Drawing.Size(75, 23);
-            this.Button_Copy.TabIndex = 17;
-            this.Button_Copy.Text = "Copy";
-            this.Button_Copy.UseVisualStyleBackColor = true;
-            this.Button_Copy.Click += new System.EventHandler(this.Button_Copy_Click);
-            // 
-            // Button_Paste
-            // 
-            this.Button_Paste.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Button_Paste.Location = new System.Drawing.Point(355, 245);
-            this.Button_Paste.Name = "Button_Paste";
-            this.Button_Paste.Size = new System.Drawing.Size(75, 23);
-            this.Button_Paste.TabIndex = 18;
-            this.Button_Paste.Text = "Paste";
-            this.Button_Paste.UseVisualStyleBackColor = true;
-            this.Button_Paste.Click += new System.EventHandler(this.Button_Paste_Click);
-            // 
-            // Button_SelectAll
-            // 
-            this.Button_SelectAll.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Button_SelectAll.Location = new System.Drawing.Point(355, 274);
-            this.Button_SelectAll.Name = "Button_SelectAll";
-            this.Button_SelectAll.Size = new System.Drawing.Size(75, 23);
-            this.Button_SelectAll.TabIndex = 19;
-            this.Button_SelectAll.Text = "Select All";
-            this.Button_SelectAll.UseVisualStyleBackColor = true;
-            this.Button_SelectAll.Click += new System.EventHandler(this.Button_SelectAll_Click);
-            // 
-            // Button_Undo
-            // 
-            this.Button_Undo.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Button_Undo.Location = new System.Drawing.Point(209, 214);
-            this.Button_Undo.Name = "Button_Undo";
-            this.Button_Undo.Size = new System.Drawing.Size(75, 23);
-            this.Button_Undo.TabIndex = 20;
-            this.Button_Undo.Text = "Undo";
-            this.Button_Undo.UseVisualStyleBackColor = true;
-            this.Button_Undo.Click += new System.EventHandler(this.Button_Undo_Click);
-            // 
-            // Button_Redo
-            // 
-            this.Button_Redo.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Button_Redo.Location = new System.Drawing.Point(501, 214);
-            this.Button_Redo.Name = "Button_Redo";
-            this.Button_Redo.Size = new System.Drawing.Size(75, 23);
-            this.Button_Redo.TabIndex = 21;
-            this.Button_Redo.Text = "Redo";
-            this.Button_Redo.UseVisualStyleBackColor = true;
-            this.Button_Redo.Click += new System.EventHandler(this.Button_Redo_Click);
-            // 
-            // Button_Cut
-            // 
-            this.Button_Cut.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Button_Cut.Location = new System.Drawing.Point(355, 187);
-            this.Button_Cut.Name = "Button_Cut";
-            this.Button_Cut.Size = new System.Drawing.Size(75, 23);
-            this.Button_Cut.TabIndex = 22;
-            this.Button_Cut.Text = "Cut";
-            this.Button_Cut.UseVisualStyleBackColor = true;
+            this.VLabel_MouseScroll2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.VLabel_MouseScroll2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.VLabel_MouseScroll2.Flip180 = false;
+            this.VLabel_MouseScroll2.Location = new System.Drawing.Point(720, 85);
+            this.VLabel_MouseScroll2.Name = "VLabel_MouseScroll2";
+            this.VLabel_MouseScroll2.Size = new System.Drawing.Size(37, 96);
+            this.VLabel_MouseScroll2.TabIndex = 24;
+            this.VLabel_MouseScroll2.Text = "< Scroll  Wheel >";
             // 
             // Form_RPGMakerSpellCheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 319);
+            this.ClientSize = new System.Drawing.Size(764, 319);
+            this.Controls.Add(this.VLabel_MouseScroll2);
+            this.Controls.Add(this.VLabel_MouseScroll);
             this.Controls.Add(this.Button_Cut);
             this.Controls.Add(this.Button_Redo);
             this.Controls.Add(this.Button_Undo);
@@ -402,5 +434,8 @@ namespace RPGMakerSpellChecker
         private System.Windows.Forms.Button Button_Undo;
         private System.Windows.Forms.Button Button_Redo;
         private System.Windows.Forms.Button Button_Cut;
+        private CustomControls.VerticalLabel VLabel_MouseScroll;
+        private CustomControls.VerticalLabel VLabel_MouseScroll2;
+        private System.Windows.Forms.ToolTip ToolTip_HotKeys;
     }
 }
