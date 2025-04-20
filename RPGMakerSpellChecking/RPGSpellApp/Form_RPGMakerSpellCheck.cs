@@ -308,6 +308,8 @@ namespace RPGMakerSpellChecker
 
         private void SaveTextDataToEvent(string text)
         {
+            //TODO we need to grab the 101 command data and paste that in every four lines.
+            //RPG Maker the editor cuts the text off if we don't do this.
             JObject special401Comamnd = (JObject)theList[listIndex].DeepClone();
 
             int tempListIndex = listIndex;
