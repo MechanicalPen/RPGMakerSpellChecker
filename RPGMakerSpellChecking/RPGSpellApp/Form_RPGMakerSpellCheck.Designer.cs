@@ -245,8 +245,6 @@ namespace RPGMakerSpellChecker
             this.RTB_EventText.UnderlinedSections = ((System.Collections.Generic.Dictionary<int, int>)(resources.GetObject("RTB_EventText.UnderlinedSections")));
             this.RTB_EventText.SelectionChanged += new System.EventHandler(this.RTB_EventText_SelectionChanged);
             this.RTB_EventText.TextChanged += new System.EventHandler(this.RTB_EventText_TextChanged);
-            this.RTB_EventText.Enter += new System.EventHandler(this.RTB_EventText_Enter);
-            this.RTB_EventText.Leave += new System.EventHandler(this.RTB_EventText_Leave);
             // 
             // spellingWorker1
             // 

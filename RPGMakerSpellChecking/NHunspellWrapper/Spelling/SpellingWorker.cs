@@ -78,10 +78,15 @@ namespace NHunspellComponent.Spelling
       //
       private void editor_Enter(object sender, EventArgs e)
       {
-         NHunspellWrapper.Instance.Editor = editor;
-         InitializeEditor();
-         NHunspellWrapper.Instance.OptionsOfCurEditor = options;
+            SetupEditorToWrapper();
       }
+
+      private void SetupEditorToWrapper()
+        {
+            NHunspellWrapper.Instance.Editor = editor;
+            InitializeEditor();
+            NHunspellWrapper.Instance.OptionsOfCurEditor = options;
+        }
 
       private void InitializeEditor()
       {
@@ -190,8 +195,18 @@ namespace NHunspellComponent.Spelling
             UnderlineNewPositionWords(UnderlinableEditor, true);
          }
       }
-
-
+        /// <summary>
+        /// Call this when you send next text to the UnderlinableEditor control.
+        /// User changes are already handled in UnderlinableEditor_TextChanged
+        /// </summary>
+        public void ProgramLoadedText()
+        {
+            if (UnderlinableEditor.IsSpellingAutoEnabled)
+            {
+                SetupEditorToWrapper();
+                UnderlineNewPositionWords(UnderlinableEditor, false);
+            }
+        }
       private void UnderlinableEditor_TextChanged(object sender, EventArgs e)
       {
          if (otherSignificantPressed)

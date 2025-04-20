@@ -36,6 +36,8 @@ namespace RPGMakerSpellChecker
         public Form_RPGMakerSpellCheck()
         {
             InitializeComponent();
+            RTB_EventText.IsSpellingEnabled = true;
+            RTB_EventText.IsSpellingAutoEnabled = true;
             this.Icon = Properties.Resources.spellcheckericon;
         }
 
@@ -45,6 +47,7 @@ namespace RPGMakerSpellChecker
         {
             RTB_EventText.Clear();
             RTB_EventText.Text = currentEventText;
+            spellingWorker1.ProgramLoadedText();
             RTB_EventText.ClearUndo();
             RTB_EventText.Update();
 
@@ -504,18 +507,6 @@ namespace RPGMakerSpellChecker
         {
             timer_ShowSavedtext.Stop();
             Button_Save.Text = "Save " + loadedFileName;
-        }
-
-        private void RTB_EventText_Enter(object sender, EventArgs e)
-        {
-            RTB_EventText.IsSpellingEnabled = true;
-            RTB_EventText.IsSpellingAutoEnabled = true;
-        }
-
-        private void RTB_EventText_Leave(object sender, EventArgs e)
-        {
-            RTB_EventText.IsSpellingEnabled = true;
-            RTB_EventText.IsSpellingAutoEnabled = false;
         }
 
         private void RTB_EventText_SelectionChanged(object sender, EventArgs e)
