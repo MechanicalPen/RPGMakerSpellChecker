@@ -193,7 +193,10 @@ namespace RPGMakerSpellChecker
                         while (tempEvent.Type == JTokenType.Null && !(eventIndex >= mapEvents.Count))
                         {
                             eventIndex++;
-                            tempEvent = mapEvents[eventIndex];
+                            if (eventIndex < mapEvents.Count()) // if null is at the end we overrun.
+                            {
+                                tempEvent = mapEvents[eventIndex];
+                            }
                         }
                     }
                 }
