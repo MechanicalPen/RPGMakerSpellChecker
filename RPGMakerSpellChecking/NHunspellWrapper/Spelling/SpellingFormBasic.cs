@@ -97,7 +97,7 @@ namespace NHunspellComponent.Spelling
       {
          if (AdddedWord != null)
          {
-            AdddedWord(sender, new SpellingEventArgs(suggestionBox.SelectedItem.ToString(), curRange.First));
+            AdddedWord(sender, new SpellingEventArgs(textShowBox.Text.Substring(curRange.First, curRange.Length), curRange.First));
          }
       }
 
